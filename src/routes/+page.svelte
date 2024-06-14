@@ -1,6 +1,8 @@
 <script lang='ts'>
     let apiResponse: any;
+    let loading = false;
     const sendMail = async () => {
+        loading = true;
         const res = await fetch('/api/mail', {
             method: 'POST',
             headers: {
@@ -8,8 +10,8 @@
             },
             body: JSON.stringify({}),
         });
+        loading = false;
         apiResponse = await res.json();
-        console.log(apiResponse);
     }
 </script>
 <h1>Welcome to SvelteKit</h1>
@@ -17,4 +19,8 @@
 
 {#if apiResponse}
     <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+{/if}
+
+{#if loading}
+    Sending Mail....
 {/if}
